@@ -7,6 +7,7 @@ typedef KeyboardTapCallback = void Function(String text);
 class NumericKeyboard extends StatefulWidget {
   /// Color of the text [default = Colors.black]
   final Color textColor;
+  final Color borderColor;
 
   /// Display a custom right icon
   final Icon? rightIcon;
@@ -30,6 +31,7 @@ class NumericKeyboard extends StatefulWidget {
       {Key? key,
       required this.onKeyboardTap,
       this.textColor = Colors.black,
+      this.borderColor = Colors.black,
       this.rightButtonFn,
       this.rightIcon,
       this.leftButtonFn,
@@ -81,20 +83,12 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
               InkWell(
                   borderRadius: BorderRadius.circular(45),
                   onTap: widget.leftButtonFn,
-                  child: Container(
-                      alignment: Alignment.center,
-                      width: 50,
-                      height: 50,
-                      child: widget.leftIcon)),
+                  child: Container(alignment: Alignment.center, width: 50, height: 50, child: widget.leftIcon)),
               _calcButton('0'),
               InkWell(
                   borderRadius: BorderRadius.circular(45),
                   onTap: widget.rightButtonFn,
-                  child: Container(
-                      alignment: Alignment.center,
-                      width: 50,
-                      height: 50,
-                      child: widget.rightIcon))
+                  child: Container(alignment: Alignment.center, width: 50, height: 50, child: widget.rightIcon))
             ],
           ),
         ],
@@ -104,21 +98,30 @@ class _NumericKeyboardState extends State<NumericKeyboard> {
 
   Widget _calcButton(String value) {
     return InkWell(
-        borderRadius: BorderRadius.circular(45),
-        onTap: () {
-          widget.onKeyboardTap(value);
-        },
-        child: Container(
-          alignment: Alignment.center,
-          width: 50,
-          height: 50,
-          child: Text(
-            value,
-            style: TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-                color: widget.textColor),
+      borderRadius: BorderRadius.circular(45),
+      onTap: () {
+        widget.onKeyboardTap(value);
+      },
+      child: Container(
+        alignment: Alignment.center,
+        width: 100,
+        height: 100,
+        decoration: BoxDecoration(
+          border: Border.all(
+            width: 1,
+            color: widget.borderColor,
           ),
-        ));
+          borderRadius: BorderRadius.circular(50),
+        ),
+        child: Text(
+          value,
+          style: TextStyle(
+            fontSize: 35,
+            fontWeight: FontWeight.bold,
+            color: widget.textColor,
+          ),
+        ),
+      ),
+    );
   }
 }
